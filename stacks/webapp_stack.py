@@ -89,7 +89,7 @@ class WebappStack(Stack):
             workflow.grant_task_response(fargate_service.task_definition.task_role)
 
         # Add Cognito for authentication
-        cognito_domain_prefix = "bedrock-serverless-prompt-chaining-demo"
+        cognito_domain_prefix = "bedrock-serverless-prompt-chaining-demo-onder"
         user_pool = cognito.UserPool(
             self,
             "StreamlitUserPool",
@@ -98,7 +98,7 @@ class WebappStack(Stack):
             account_recovery=cognito.AccountRecovery.NONE,
             auto_verify=cognito.AutoVerifiedAttrs(email=True),
             sign_in_aliases=cognito.SignInAliases(email=True),
-            self_sign_up_enabled=False,
+            self_sign_up_enabled=True,
             password_policy={
                 "min_length": 12,
                 "require_lowercase": False,

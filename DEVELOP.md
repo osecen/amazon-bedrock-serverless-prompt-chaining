@@ -21,12 +21,18 @@ After this initial setup, you only need to run `source .venv/bin/activate` to us
 
 ### Deploy the demo application
 
-Fork this repo to your own GitHub account.
-Edit the file `cdk_stacks.py`. Search for `parent_domain` and fill in your own DNS domain, such as `my-domain.com`.
+* Fork this repo to your own GitHub account.
+* Edit the file `cdk_stacks.py`. Search for `parent_domain` and fill in your own DNS domain, such as `my-domain.com`.
+* Edit `cognito_domain_prefix` so it is unique. `bedrock-serverless-prompt-chaining-demo` may give you conflict during deployment.
+
 The demo application will be hosted at `https://bedrock-serverless-prompt-chaining.my-domain.com`.
 Push this change to your fork repository.
 
 Set up a Weasyprint Lambda layer in your account. One of the examples in the demo application uses this library to generate PDF files.
+
+You have to have `docker` running on your computer. I had issues with my docker installation where it was not connecting to repo. I eventually 
+had to switch computers to get it to work. Also you can skip this section below if you don't want to TripPlanner agent. 
+
 ```
 git clone https://github.com/kotify/cloud-print-utils.git
 
@@ -54,8 +60,10 @@ cdk deploy --app 'python3 cdk_stacks.py' --all
 ```
 
 The demo application will be hosted at `https://bedrock-serverless-prompt-chaining.my-domain.com`,
-behind Cognito-based user authentication.
-To add users that can log into the demo application, select the `bedrock-serverless-prompt-chaining-demo` user pool on the
+behind Cognito-based user authentication. Currently, users can create a new account. If you want to control the access, 
+
+
+set `self_sign_up_enabled=False` in webapp_stack.py. To add users that can log into the demo application, select the `bedrock-serverless-prompt-chaining-demo` user pool on the
 [Cognito console](https://us-west-2.console.aws.amazon.com/cognito/v2/idp/user-pools?region=us-west-2)
 and click "Create user".
 
